@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.PicPaySimplificado.domain.entities.AccountType;
 import com.PicPaySimplificado.dtos.user.UserRequestDto;
 import com.PicPaySimplificado.dtos.user.UserResponseDto;
 import com.PicPaySimplificado.services.user.UserService;
@@ -41,7 +42,7 @@ public class UserController {
             return ResponseEntity.badRequest().body("CPF já cadastrado!!!");
         }
 
-        UserResponseDto user = userService.createUser(data);
+        UserResponseDto user = userService.createUser(data, AccountType.PF);
 
         return ResponseEntity.ok(user);
     }
@@ -64,7 +65,7 @@ public class UserController {
             return ResponseEntity.badRequest().body("CNPJ já cadastrado!!!");
         }
 
-        UserResponseDto user = userService.createUser(data);
+        UserResponseDto user = userService.createUser(data, AccountType.PJ);
 
         return ResponseEntity.ok(user);
     }
