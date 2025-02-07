@@ -16,6 +16,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 587
+    username: //username
+    password: //password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 server:
   port: 8080

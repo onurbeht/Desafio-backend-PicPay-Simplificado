@@ -15,6 +15,4 @@ public class PicPaySimplificadoApplication {
 	// todo - Verificar a conslta ao registrar um user/store, para fazer menos
 	// consultas.
 
-	// todo - terminar, adicionando o servico de envio de email/sms
-
 }
