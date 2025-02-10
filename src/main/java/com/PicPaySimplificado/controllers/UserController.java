@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.PicPaySimplificado.domain.entities.AccountType;
 import com.PicPaySimplificado.dtos.user.UserRequestDto;
@@ -25,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping("/pf")
-    public ResponseEntity<?> registerUserPf(@RequestBody UserRequestDto data) {
+    public ResponseEntity<?> registerUserPf(@RequestBody UserRequestDto data, UriComponentsBuilder uriBuilder) {
 
         // Check if cpf is valid
         if (!ValidateCpf.valid(data.document())) {
@@ -44,11 +45,13 @@ public class UserController {
 
         UserResponseDto user = userService.createUser(data, AccountType.PF);
 
-        return ResponseEntity.ok(user);
+        var uri = uriBuilder.port(8080).path("/api/user/{id}").buildAndExpand(user.id()).toUri();
+
+        return ResponseEntity.created(uri).body(user);
     }
 
     @PostMapping("/pj")
-    public ResponseEntity<?> registerUserPj(@RequestBody UserRequestDto data) {
+    public ResponseEntity<?> registerUserPj(@RequestBody UserRequestDto data, UriComponentsBuilder uriBuilder) {
 
         // Check if cnpj is valid
         if (!ValidateCnpj.valid(data.document())) {
@@ -67,7 +70,9 @@ public class UserController {
 
         UserResponseDto user = userService.createUser(data, AccountType.PJ);
 
-        return ResponseEntity.ok(user);
+        var uri = uriBuilder.port(8080).path("/api/user/{id}").buildAndExpand(user.id()).toUri();
+
+        return ResponseEntity.created(uri).body(user);
     }
 
 }
