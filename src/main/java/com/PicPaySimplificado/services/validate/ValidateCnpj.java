@@ -11,6 +11,11 @@ public class ValidateCnpj {
             return false;
         }
 
+        // Verifica se o CNPJ contém apenas zeros
+        if (cnpj.equals("00000000000000")) {
+            return false;
+        }
+
         // Calcula os dígitos verificadores
         char dig13, dig14;
         int sm, i, r, num, peso;
@@ -55,8 +60,7 @@ public class ValidateCnpj {
 
         // Verifica se os dígitos calculados são iguais aos dígitos informados
         return (dig13 == cnpj.charAt(12)) && (dig14 == cnpj.charAt(13));
-    
-    }
 
+    }
 
 }
