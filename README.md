@@ -6,14 +6,15 @@ Ler o arquivo DESAFIO.MD, onde haverá as informações sobre o desafio.
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Java 21**
-- **Spring Boot 3.4.1**
-- **Spring Web** 
-- **OpenFeign** (para requisições HTTP simplificadas)
-- **H2 Database** (banco de dados em memória)
-- **Spring Data JPA** 
-- **Spring Mail** (Envio de emails)
-- **Maven** (gerenciamento de dependências e build)
+- **[Java 21](https://www.oracle.com/br/java/technologies/downloads/)**
+- **[Spring Boot 3.4.1](https://spring.io/projects/spring-boot)**
+- **[Spring Web](https://docs.spring.io/spring-boot/reference/web/index.html)** 
+- **[OpenFeign](https://spring.io/projects/spring-cloud-openfeign)** (para requisições HTTP simplificadas)
+- **[H2 Database](https://www.h2database.com/html/main.html)** (banco de dados em memória)
+- **[Spring Data JPA](https://spring.io/projects/spring-data-jpa)** 
+- **[Spring Mail](https://docs.spring.io/spring-framework/reference/integration/email.html)** (Envio de emails)
+- **[Maven](maven.apache.org)** (gerenciamento de dependências e build)
+- **[Swagger](https://springdoc.org/)** (Documentação da API)
 
 ## 🛠 Configuração e Execução
 
@@ -43,7 +44,7 @@ Antes de iniciar, certifique-se de ter instalado:
    mvn spring-boot:run
    ```
 
-3. Acesse a aplicação na URL padrão:
+3. Para testar, acesse a aplicação na URL padrão http://localhost:8080/api **ou pelo Swagger - http://localhost:8080/api/swagger-ui/index.html** :
 
     Criação de usuarios.
      Envie o JSON no body da requisição
