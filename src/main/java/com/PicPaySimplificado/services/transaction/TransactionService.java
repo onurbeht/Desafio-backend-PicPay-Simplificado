@@ -3,6 +3,7 @@ package com.PicPaySimplificado.services.transaction;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.PicPaySimplificado.domain.entities.Transfer;
 import com.PicPaySimplificado.domain.entities.User;
@@ -28,6 +29,7 @@ public class TransactionService {
         this.emailService = emailService;
     }
 
+    @Transactional(rollbackFor = NotAuthorizedException.class)
     public void executeTransfer(User sender, User receiver, Double amount) {
 
         // todo - Altera isso para capturar Exceptions alem do FeignException.Forbidden
@@ -37,7 +39,7 @@ public class TransactionService {
         } catch (FeignException.Forbidden e) {
             throw new NotAuthorizedException("Unauthorized transfer");
         }
-
+    
         // update sender balance
         sender.setBalance(sender.getBalance() - amount);
 
@@ -56,7 +58,6 @@ public class TransactionService {
         emailService.send(new EmailDto(receiver.getEmail(), "Payment received",
                 "You received a payment of " + amount + " from " + sender.getFirstName() + " " + sender.getLastName()));
 
-        return;
     }
 
 }

@@ -3,7 +3,6 @@ package com.PicPaySimplificado.controllers;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +12,6 @@ import com.PicPaySimplificado.domain.entities.AccountType;
 import com.PicPaySimplificado.domain.entities.User;
 import com.PicPaySimplificado.dtos.transfer.TransferRequestDto;
 import com.PicPaySimplificado.dtos.transfer.TransferResponseDto;
-import com.PicPaySimplificado.infra.exceptions.NotAuthorizedException;
 import com.PicPaySimplificado.services.transaction.TransactionService;
 import com.PicPaySimplificado.services.user.UserService;
 
@@ -32,7 +30,6 @@ public class TransactionController {
     // Todo - Implementar validações, nos valores que vem do DTO
 
     @PostMapping("/send")
-    @Transactional(rollbackFor = NotAuthorizedException.class)
     public ResponseEntity<?> transfer(@RequestBody TransferRequestDto transferRequestDto) {
 
         // Sender Validations
