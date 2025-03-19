@@ -11,6 +11,8 @@ import com.PicPaySimplificado.domain.repositories.UserRepository;
 import com.PicPaySimplificado.dtos.user.UserRequestDto;
 import com.PicPaySimplificado.dtos.user.UserResponseDto;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 
@@ -28,8 +30,13 @@ public class UserService {
         return userRepository.findByDocument(formatDocument(document));
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User findByIdWithLock(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User doesnt exist"));
+    }
+
+    @Transactional
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Transactional
