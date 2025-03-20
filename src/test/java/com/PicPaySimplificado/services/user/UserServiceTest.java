@@ -3,6 +3,7 @@ package com.PicPaySimplificado.services.user;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -21,6 +22,8 @@ import com.PicPaySimplificado.domain.entities.User;
 import com.PicPaySimplificado.domain.repositories.UserRepository;
 import com.PicPaySimplificado.dtos.user.UserRequestDto;
 import com.PicPaySimplificado.dtos.user.UserResponseDto;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -92,10 +95,10 @@ public class UserServiceTest {
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
-        Optional<User> possibleUser = userService.findById(userId);
+        User possibleUser = userService.findByIdWithLock(userId);
 
-        assertTrue(possibleUser.isPresent(), "User with the provided ID should be found.");
-        assertEquals(user, possibleUser.get(), "The returned user should be the same as the mocked one.");
+        assertNotNull(possibleUser, "User with the provided ID should be found.");
+        assertEquals(user, possibleUser, "The returned user should be the same as the mocked one.");
     }
 
     @Test
@@ -103,9 +106,7 @@ public class UserServiceTest {
         Long userId = 2L;
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        Optional<User> possibleUser = userService.findById(userId);
-
-        assertFalse(possibleUser.isPresent(), "User with the provided ID should not be found.");
+        assertThrows(EntityNotFoundException.class, () -> userService.findByIdWithLock(userId));
     }
 
     @Test
@@ -113,7 +114,8 @@ public class UserServiceTest {
 
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        UserResponseDto possibleUser = userService.createUser(userRequestDto, AccountType.PF);
+        UserResponseDto possibleUser = userService.createUser(userRequestDto,
+                AccountType.PF);
 
         assertNotNull(possibleUser, "The response should not be null");
         assertEquals(user.getFirstName(), possibleUser.firstName(),
