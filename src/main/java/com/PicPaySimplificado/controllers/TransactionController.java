@@ -22,7 +22,7 @@ public class TransactionController {
 
     // Todo - Implementar validações, nos valores que vem do DTO
 
-    @PostMapping("/send")
+    @PostMapping()
     public ResponseEntity<?> transfer(@RequestBody TransferRequestDto transferRequestDto) {
         // check if senderId == receiverId
         if (transferRequestDto.senderId().equals(transferRequestDto.receiverId())) {
